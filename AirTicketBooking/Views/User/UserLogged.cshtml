@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "UserLogged";
+    Layout = "~/Views/Shared/UserLogged.cshtml";
+}
+
+<link href="~/Content/form/form-sheet.css" rel="stylesheet" />
+
+
+<div class="gray-bg">
+    <div class="card-panel">
+        <h2>Flight Booking</h2>
+        <hr />
+
+        <form action="process_booking.php" method="POST" class="mt-3">
+            <div class="form-group row">
+                <label for="flightId" class="col-md-2 col-form-label">Flight ID:</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="flightId" name="flightId" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="fromDestination" class="col-md-2 col-form-label">From Destination:</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="fromDestination" name="fromDestination" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="toDestination" class="col-md-2 col-form-label">To Destination:</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="toDestination" name="toDestination" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="departureDate" class="col-md-2 col-form-label">Departure Date:</label>
+                <div class="col-md-10">
+                    <input type="date" class="form-control" id="departureDate" name="departureDate" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="departureTime" class="col-md-2 col-form-label">Departure Time:</label>
+                <div class="col-md-10">
+                    <input type="time" class="form-control" id="departureTime" name="departureTime" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="seatType" class="col-md-2 col-form-label">Seat Type:</label>
+                <div class="col-md-10">
+                    <select class="form-control" id="seatType" name="seatType">
+                        <option value="Economy">Economy</option>
+                        <option value="Business">Business</option>
+                        <option value="First Class">First Class</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

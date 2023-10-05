@@ -1,0 +1,85 @@
+﻿.gray-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 125vh; /* Use min-height to allow the form to push down the footer if necessary */
+    margin: 0;
+    background-color: #947901; /* Background color for the entire page */
+}
+
+.card-panel {
+    background-color: #fff; /* Background color for the form */
+    border: 1px solid #ddd; /* Add a border around the form */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow to the form */
+    padding: 40px;
+    width: 600px; /* Increase the width of the form */
+    text-align: center;
+    border-radius: 10px; /* Add border-radius for rounded corners */
+   
+}
+
+.input-field {
+    margin-bottom: 40px; /* Increase space between input fields */
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+label {
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+    white-space: break-spaces;
+}
+
+button.btn {
+    background-color: #947901;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    button.btn:hover {
+        background-color: #6d580a; /* Darken the color on hover */
+    }
+
+h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px; /* Increase space below the heading */
+}
+
+.signup-link {
+    margin-top: 10px;
+}
+
+    .signup-link a {
+        color: #333;
+    }
+
+.btn-signup {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff5722; /* Change the background color as desired */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s ease;
+}
+
+    /* Hover effect for the button */
+    .btn-signup:hover {
+        background-color: #e64a19; /* Change the background color on hover */
+    }
