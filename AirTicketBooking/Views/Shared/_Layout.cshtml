@@ -104,11 +104,15 @@
                     <ul class="nav-menu">
                         <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Sign in", "Signin", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="menu-has-children"><a href="#">Signin</a>
+                            <ul>
+                                <li>@Html.ActionLink("Sign in", "Signin", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                                <li>@Html.ActionLink("Sign in(Admin)", "AdminSignin", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            </ul>
                         <li>@Html.ActionLink("Sign up", "Signup", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     </ul>
-                </nav><!-- #nav-menu-container -->
+</nav><!-- #nav-menu-container -->
             </div>
         </div>
     </header><!-- #header -->

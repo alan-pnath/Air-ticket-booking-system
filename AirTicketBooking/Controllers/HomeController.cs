@@ -47,14 +47,40 @@ namespace AirTicketBooking.Controllers
             return View(users);
         }
 
-    public ActionResult Signup()
+        public ActionResult Signup()
         {
             return View();
         }
 
+        public ActionResult AdminSignin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AdminSignin(Admin admins)
+        {
+            if (ModelState.IsValid)
+            {
+                //message will collect the String value from the model method.
+                String message = admins.LoginProcess(admins.adminUserName, admins.adminPassword);
+                //RedirectToAction("actionName/ViewName_ActionResultMethodName", "ControllerName");
+                if (message.Equals("1"))
+                {
+                    //this will add cookies for the username.
+                    Response.Cookies.Add(new HttpCookie("Users1", admins.adminName));
+                    //This is a different Controller for the User Homepage. Redirecting after successful process.
+                    return RedirectToAction("Index", "Admin");
+                }
+                else
+                    ViewBag.ErrorMessage = message;
+            }
+            return View(admins);
+        }
 
 
-    public ActionResult About()
+
+        public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
