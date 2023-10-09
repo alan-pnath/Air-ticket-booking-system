@@ -1,0 +1,52 @@
+﻿@model List<AirTicketBooking.Models.FlightBooking>
+@{
+    ViewBag.Title = "GetFlightBookings";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h2>Flight Bookings</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Booking ID</th>
+            <th>User ID</th>
+            <th>Flight ID</th>
+            <th>Booking Date</th>
+            <th>Payment Details</th>
+            <th>Passenger Count</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.BookingId</td>
+                    <td>@item.UserId</td>
+                    <td>@item.FlightId</td>
+                    <td>@item.BookingDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>@item.PaymentDetails.ToString("0.00")</td>
+                    <td>@item.PassengerCount</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.BookingId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.BookingId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.BookingId })
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7">No data available</td>
+            </tr>
+        }
+    </tbody>
+
+</table>

@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AirTicketBooking.Models;
-using System.Data.SqlClient;
 using System.Configuration;
+using AirTicketBooking.Repository;
+using System.Web.Security;
 
 namespace AirTicketBooking.Controllers
 {
     public class HomeController : Controller
     {
-
-        SqlConnection con = new SqlConnection();
-        SqlCommand cmd = new SqlCommand();
-        SqlDataReader reader;
-
-        public ActionResult Index()
+        // GET: Home
+        public ActionResult Home()
         {
             return View();
         }
+
         [HttpGet]
         public ActionResult Signin()
         {
@@ -27,71 +27,89 @@ namespace AirTicketBooking.Controllers
         }
 
         [HttpPost]
-        public ActionResult Signin(User users)
+        public ActionResult Signin(login login) // Use a model for input parameters
         {
+            UserDataAccess dataAccess = new UserDataAccess();
+
             if (ModelState.IsValid)
             {
-                //message will collect the String value from the model method.
-                String message = users.LoginProcess(users.Email, users.Password);
-                //RedirectToAction("actionName/ViewName_ActionResultMethodName", "ControllerName");
-                if (message.Equals("1"))
+                string userType = dataAccess.ValidateLogin(login.Email, login.Password, out string Usertype);
+
+                if (!string.IsNullOrEmpty(Usertype))
                 {
-                    //this will add cookies for the username.
-                    Response.Cookies.Add(new HttpCookie("Users1", users.firstName));
-                    //This is a different Controller for the User Homepage. Redirecting after successful process.
-                    return RedirectToAction("UserLogged", "User");
+                    FormsAuthentication.SetAuthCookie(login.Email, false);
+
+                    if (userType.Equals("User", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return RedirectToAction("Index", "User"); // Redirect to User view
+                    }
+                    else if (userType.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return RedirectToAction("Index", "Admin"); // Redirect to Admin view
+                    }
                 }
                 else
-                    ViewBag.ErrorMessage = message;
+                {
+                    ModelState.AddModelError("", "Invalid username or password.");
+                }
             }
-            return View(users);
+
+            return View(login);
         }
 
+
+
+        [HttpGet]
         public ActionResult Signup()
         {
             return View();
         }
-
-        public ActionResult AdminSignin()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public ActionResult AdminSignin(Admin admins)
+        public ActionResult Signup(UserReg users)
         {
-            if (ModelState.IsValid)
+            UserDataAccess dataAccess = new UserDataAccess();
+
+            try
             {
-                //message will collect the String value from the model method.
-                String message = admins.LoginProcess(admins.adminUserName, admins.adminPassword);
-                //RedirectToAction("actionName/ViewName_ActionResultMethodName", "ControllerName");
-                if (message.Equals("1"))
+                if (ModelState.IsValid)
                 {
-                    //this will add cookies for the username.
-                    Response.Cookies.Add(new HttpCookie("Users1", admins.adminName));
-                    //This is a different Controller for the User Homepage. Redirecting after successful process.
-                    return RedirectToAction("Index", "Admin");
+                    // Attempt to insert the user
+                    bool userInserted = dataAccess.InsertUser(users);
+
+                    if (userInserted)
+                    {
+                        ViewBag.RegistrationSuccess = true;
+                        return RedirectToAction("Signin", "Home");
+                    }
+                    else
+                    {
+                        // User already exists, set a message
+                        ViewBag.Message = "User with the same email already exists.";
+                        return RedirectToAction("Signup", "Home");
+
+
+                    }
                 }
-                else
-                    ViewBag.ErrorMessage = message;
+
+                // If model validation fails or user already exists, return the view with validation errors or a message
+                return View(users);
             }
-            return View(admins);
+            finally
+            {
+                Console.WriteLine("User registered successfully ");
+            }
         }
 
 
-
-        public ActionResult About()
+        public ActionResult Aboutus()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Contactus()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
+
     }
 }

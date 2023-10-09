@@ -1,0 +1,39 @@
+﻿@model List<AirTicketBooking.Models.flight>
+
+@{
+    ViewBag.Title = "GetFlightDetails";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h2>Flight Details</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Flight ID</th>
+            <th>Flight Name</th>
+            <th>Seating Capacity</th>
+            <th>Flight Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FlightId</td>
+                <td>@item.FlightName</td>
+                <td>@item.SeatingCapacity</td>
+                <td>@item.FlightPrice</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.FlightId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.FlightId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.FlightId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

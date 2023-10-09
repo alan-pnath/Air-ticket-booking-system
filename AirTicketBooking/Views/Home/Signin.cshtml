@@ -1,119 +1,43 @@
-﻿@model AirTicketBooking.Models.User
+﻿@model AirTicketBooking.Models.login
+
 @{
     ViewBag.Title = "Signin";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/HomeLayout.cshtml";
 }
-<style>
-    .gray-bg {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh; /* Ensure the form is centered vertically on the viewport */
-        margin: 0;
-        background-color: #947901; /* Background color for the entire page */
-    }
+<link href="~/Content/Home/forms/signinforms.css" rel="stylesheet" />
+<div class="container-loginform">
+    <div class="login-form">
+        <h2 style="color:black">Signin</h2>
 
-    .card-panel {
-        background-color: #fff; /* Background color for the form */
-        border: 1px solid #ddd; /* Add a border around the form */
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow to the form */
-        padding: 40px;
-        width: 400px; /* Increase the width of the form */
-        text-align: center;
-        border-radius: 10px; /* Add border-radius for rounded corners */
-    }
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    .input-field {
-        margin-bottom: 20px; /* Increase space between input fields */
-        display: flex;
-        flex-direction: column;
-        align-items: left;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-
-    label {
-        text-align: left;
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
-
-    button.btn {
-        background-color: #947901;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-        button.btn:hover {
-            background-color: #6d580a; /* Darken the color on hover */
-        }
-
-    h2 {
-        color: #333;
-        font-size: 24px;
-        margin-bottom: 20px; /* Increase space below the heading */
-    }
-
-    .signup-link {
-        margin-top: 10px;
-    }
-
-        .signup-link a {
-            color: #333;
-        }
-
-    .btn-signup {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #ff5722; /* Change the background color as desired */
-        color: #fff; /* Text color */
-        border: none;
-        border-radius: 5px;
-        text-decoration: none; /* Remove underline */
-        transition: background-color 0.3s ease;
-    }
-
-        /* Hover effect for the button */
-        .btn-signup:hover {
-            background-color: #e64a19; /* Change the background color on hover */
-        }
-</style>
-@using (Html.BeginForm())
-{
-    <div class="gray-bg">
-        <div class="card-panel">
-            <h2>Signin</h2>
-            <h4 >@ViewBag.ErrorMessage</h4>
-            <form action="" method="POST">
-                <div class="input-field">
-                    @Html.LabelFor(m => m.Email)
-                    @Html.TextBoxFor(m => m.Email)
-                </div>
-                <br />
-                <span >@Html.ValidationMessageFor(m => m.Email)</span>
-                <div class="input-field">
-                    @Html.LabelFor(m => m.Password)
-                    @*<input type="password" id="password" name="password" required>*@
-                    @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password" } })
-                </div>
-                <br />
-                <span >@Html.ValidationMessageFor(m => m.Password)</span>
-                <br />
-                <button type="submit" class="btn">Login</button>
-            </form>
-            <div class="signup-link">
-                Don't have an account?<span>@Html.ActionLink("Sign up", "Signup", "Home", new { area = "" }, new { @class = "nav-link" })</span>
+            <div class="form-group2">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
-        </div>
+
+            <div class="form-group2">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group2">
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </div>
+        }
     </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@if (ViewBag.RegistrationSuccess == true)
+{
+    <script>
+        alert("Registration Successful. You can now sign in.");
+    </script>
 }

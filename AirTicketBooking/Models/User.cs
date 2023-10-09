@@ -5,11 +5,13 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-
 namespace AirTicketBooking.Models
 {
     public class UserReg
     {
+        [Key]
+        public int userId { get; set; } 
+
         [Required]
         [Display(Name = "First Name")]
         public string firstName { get; set; }
@@ -21,7 +23,7 @@ namespace AirTicketBooking.Models
         [Required]
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime DateofBirth { get; set; }
 
         [Required]
         [Display(Name = "Age")]
@@ -42,14 +44,14 @@ namespace AirTicketBooking.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+
         [Required]
         [Display(Name = "Confirm Password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
     }
 
-    public class User
+    public class login
     {
 
         [Required(ErrorMessage = "Please enter your Email ID.")]
@@ -63,45 +65,6 @@ namespace AirTicketBooking.Models
 
         public string firstName { get; set; }
 
-        //This method validates the Login credentials
-        public String LoginProcess(String strUsername, String strPassword)
-        {
-            String message = "";
-            //my connection string
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cs"].ConnectionString);
-            SqlCommand cmd = new SqlCommand("Select * from TblUserLogin where Email=@Username", con);
-            cmd.Parameters.AddWithValue("@Username", strUsername);
-            try
-            {
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    Boolean login = (strPassword.Equals(reader["Password"].ToString(), StringComparison.InvariantCulture)) ? true : false;
-                    if (login)
-                    {
-                        message = "1";
-                        firstName = reader["firstName"].ToString();
-
-                    }
-                    else
-                        message = "Invalid Credentials";
-                }
-                else
-                    message = "Invalid Credentials";
-
-                reader.Close();
-                reader.Dispose();
-                cmd.Dispose();
-                con.Close();
-            }
-            catch (Exception ex)
-            {
-                message = ex.Message.ToString() + "Error.";
-
-            }
-            return message;
-        }
-
+       
     }
 }

@@ -1,0 +1,282 @@
+﻿/* Reset some default styles for consistency */
+body,
+h1,
+h2,
+h3,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Make the body take up at least the full viewport height */
+}
+    body::after {
+        content: "";
+        background-image: url('images/background-home.jpg');
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.3;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+    .header img {
+        width: 50px; /* Adjust the size of your logo */
+        height: auto;
+    }
+
+    .header .logo {
+        margin-right: 10px;
+    }
+
+    .header .logoname {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+.navtxt a {
+    color: #fff;
+    margin-right: 20px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+    .navtxt a:hover {
+        color: #ffc107; /* Change the color on hover */
+    }
+
+.home {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    flex-grow: 1; /* Allow the home content to expand and push the footer down */
+}
+
+/* Add these styles to your existing CSS */
+
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.footer-logo img {
+    width: 200px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.footer-logo .logoname {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+.footer-contact p {
+    margin-bottom: 5px;
+}
+
+.footer-social a {
+    color: #fff;
+    font-size: 24px;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+    .footer-social a:hover {
+        color: #ffc107;
+    }
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .header .logoname {
+        font-size: 20px;
+    }
+
+    .navtxt a {
+        margin-right: 10px;
+    }
+}
+.home {
+    position: relative;
+    height: 100vh;
+    background-image: url('images/background-home.jpg'); /* Replace with your background image URL */
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Style the content container within the home section */
+.content-container {
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background color */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+    .content-container h1 {
+        font-size: 36px;
+    }
+
+    .content-container p {
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+/* Style the navigation links to different pages */
+.page-links {
+    margin-top: 20px;
+}
+
+    .page-links a {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px 20px;
+        background-color: #ffc107;
+        color: #333;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+        .page-links a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+/* Add these styles for the About Us page */
+.about-us {
+    background-image: url('about-us-image.jpg'); /* Set your image path here */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    min-height: 100vh;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+    /* Additional styling for the content container */
+    .about-us .content-container {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .about-us h1 {
+        font-size: 36px;
+    }
+
+    .about-us p {
+        font-size: 18px;
+        margin-top: 10px;
+    }
+/* Add these styles for the Contact Us page */
+.contact {
+    background-image: url('contact-image.jpg'); /* Set your image path here */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    min-height: 100vh;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+    /* Additional styling for the content container and contact info */
+    .contact .content-container {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .contact h1 {
+        font-size: 36px;
+    }
+
+    .contact p {
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+    .contact .contact-info {
+        margin-top: 20px;
+    }
+
+        .contact .contact-info p {
+            margin: 5px 0;
+        }
+    /* Additional styling for the contact form */
+    .contact form {
+        margin-top: 20px;
+        text-align: left;
+    }
+
+        .contact form label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .contact form input[type="text"],
+        .contact form input[type="email"],
+        .contact form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .contact form button {
+            background-color: #ffc107;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .contact form button:hover {
+                background-color: #333;
+                color: #fff;
+            }
+

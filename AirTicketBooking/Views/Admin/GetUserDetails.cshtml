@@ -1,0 +1,45 @@
+﻿@model List<AirTicketBooking.Models.UserReg>
+
+@{
+    ViewBag.Title = "GetUserDetails";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <!-- Add table headers for user properties here -->
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Phone Number</th>
+            <th>NIC</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <!-- Add table cells to display user properties here -->
+                <td>@user.firstName</td>
+                <td>@user.lastName</td>
+                <td>@user.Email</td>
+                <td>@user.Age</td>
+                <td>@user.phoneNumber</td>
+                <td>@user.NIC</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = user.userId }) |
+                    @Html.ActionLink("Details", "Details", new { id = user.userId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = user.userId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

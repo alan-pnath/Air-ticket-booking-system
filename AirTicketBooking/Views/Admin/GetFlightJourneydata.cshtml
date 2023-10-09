@@ -1,0 +1,47 @@
+﻿@model List<AirTicketBooking.Models.FlightJourney>
+@{
+    ViewBag.Title = "GetFlightJourneydata";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h2>Flight Journey</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Flight Booking ID</th>
+            <th>From Destination</th>
+            <th>To Destination</th>
+            <th>Departure Date</th>
+            <th>Departure Time</th>
+            <th>Flight ID</th>
+            <th>Seat Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FlightBookingId</td>
+                    <td>@item.FromDestination</td>
+                    <td>@item.ToDestination</td>
+                    <td>@item.DepartureDate.ToShortDateString()</td>
+                    <td>@item.DepartureTime.ToString(@"hh\:mm\:ss")</td>
+                    <td>@item.FlightId</td>
+                    <td>@item.SeatType</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7">No data available</td>
+            </tr>
+        }
+    </tbody>
+</table>

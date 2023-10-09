@@ -1,8 +1,11 @@
-﻿using System;
+﻿using AirTicketBooking.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AirTicketBooking.Repository;
+using static AirTicketBooking.Repository.FlightDataAccess;
 
 namespace AirTicketBooking.Controllers
 {
@@ -25,65 +28,36 @@ namespace AirTicketBooking.Controllers
         {
             return View();
         }
-
-        // POST: Admin/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult GetUserDetails()
         {
-            try
-            {
-                // TODO: Add insert logic here
+            UserDataRepository dataRepository = new UserDataRepository();
+            List<UserReg> userList = dataRepository.GetUserData();
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View(userList);
         }
 
-        // GET: Admin/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult GetFlightDetails()
         {
-            return View();
+            FlightDataRepository dataRepository = new FlightDataRepository();
+            List<flight> flightList = dataRepository.GetAllFlightDetails();
+
+            return View(flightList);
         }
 
-        // POST: Admin/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult GetFlightBookings()
         {
-            try
-            {
-                // TODO: Add update logic here
+            FlightBookingDataRepository dataRepository = new FlightBookingDataRepository();
+            List<FlightBooking> flightList = dataRepository.GetFlightBookingData();
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View(flightList);
+        } public ActionResult GetFlightJourneydata()
+        {
+            FlightJourneyDataRepository dataRepository = new FlightJourneyDataRepository();
+            List<FlightJourney> flightList = dataRepository.GetFlightJourneyData();
+
+            return View(flightList);
         }
 
-        // GET: Admin/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: Admin/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

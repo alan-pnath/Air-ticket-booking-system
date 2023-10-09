@@ -9,7 +9,7 @@ namespace AirTicketBooking.Controllers
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult UserLogged()
+        public ActionResult Index()
         {
             return View();
         }
