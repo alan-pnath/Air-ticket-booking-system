@@ -22,4 +22,20 @@ namespace AirTicketBooking.Models
         public string adminName { get; set; }
 
     }
+
+    public class AddFlight
+    {
+        [Key]
+        public int FlightId { get; set; }
+
+        [Display(Name = "Flight name")]
+        public string FlightName { get; set; }
+
+        [Display(Name = "Seating capacity")]
+        public int SeatingCapacity { get; set; }
+
+        [Display(Name = "Flight Price")]
+        public decimal FlightPrice { get; set; }
+    }
+
 }

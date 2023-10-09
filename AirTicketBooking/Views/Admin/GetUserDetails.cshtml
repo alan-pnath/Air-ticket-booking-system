@@ -19,7 +19,6 @@
             <th>Email</th>
             <th>Age</th>
             <th>Phone Number</th>
-            <th>NIC</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -33,7 +32,6 @@
                 <td>@user.Email</td>
                 <td>@user.Age</td>
                 <td>@user.phoneNumber</td>
-                <td>@user.NIC</td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = user.userId }) |
                     @Html.ActionLink("Details", "Details", new { id = user.userId }) |

@@ -164,4 +164,77 @@ namespace AirTicketBooking.Repository
         }
     }
 
+    public class FlightRepository
+    {
+        public string connectionString;
+
+        public string InsertFlight(AddFlight flight)
+        {
+            SqlConnection con = null;
+            string result = "";
+
+            try
+            {
+                connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+                con = new SqlConnection(connectionString);
+                SqlCommand cmd = new SqlCommand("InsertFlightDetails", con); // Replace with your actual stored procedure name
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@FlightName", flight.FlightName);
+                cmd.Parameters.AddWithValue("@SeatingCapacity", flight.SeatingCapacity);
+                cmd.Parameters.AddWithValue("@FlightPrice", flight.FlightPrice);
+
+                con.Open();
+                result = cmd.ExecuteScalar()?.ToString() ?? ""; // ExecuteScalar can return null
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                
+                Console.WriteLine(ex.Message);
+                return result = "";
+            }
+            finally
+            {
+                con?.Close(); 
+            }
+        }
+
+        public int DeleteFlightById(int flightId)
+        {
+            SqlConnection con = null;
+            int result;
+            
+
+            try
+            {
+                connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+                con = new SqlConnection(connectionString);
+                SqlCommand cmd = new SqlCommand("DeleteFlightDetails", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@flightId", flightId);
+                
+
+
+                con.Open();
+                result = cmd.ExecuteNonQuery();
+
+                return result;
+            }
+            catch
+            {
+                return result = 0;
+            }
+            finally
+            {
+                con?.Close(); 
+            }
+        }
+
+    }
+
+   
+
 }

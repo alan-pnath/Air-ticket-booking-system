@@ -43,6 +43,56 @@ namespace AirTicketBooking.Controllers
 
             return View(flightList);
         }
+        [HttpGet]
+        public ActionResult AddFlightDetails()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddFlightDetails(AddFlight flight)
+        {
+            if (ModelState.IsValid)
+            {
+                FlightRepository flightRepository = new FlightRepository(); // Assuming you have a FlightRepository class
+
+                // Insert the flight data into the database
+                string result = flightRepository.InsertFlight(flight);
+
+                if (!string.IsNullOrEmpty(result))
+                {
+                    TempData["result1"] = result;
+                    ModelState.Clear();
+                    return RedirectToAction("GetFlightDetails");
+                }
+                else
+                {
+                   
+                    return View();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error ");
+                return View();
+            }
+        }
+
+        [HttpGet]
+
+        public ActionResult DeleteFlight(int id)
+        {
+            FlightRepository flightRepository = new FlightRepository();
+
+            // Call the method to delete the flight record by flightId
+            int result = flightRepository.DeleteFlightById(id);
+
+            TempData["result3"] = result;
+            ModelState.Clear();
+
+            
+            return RedirectToAction("GetFlightDetails");
+        }
+
 
         public ActionResult GetFlightBookings()
         {
@@ -50,7 +100,8 @@ namespace AirTicketBooking.Controllers
             List<FlightBooking> flightList = dataRepository.GetFlightBookingData();
 
             return View(flightList);
-        } public ActionResult GetFlightJourneydata()
+        } 
+        public ActionResult GetFlightJourneydata()
         {
             FlightJourneyDataRepository dataRepository = new FlightJourneyDataRepository();
             List<FlightJourney> flightList = dataRepository.GetFlightJourneyData();
