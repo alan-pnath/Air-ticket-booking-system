@@ -82,9 +82,10 @@ namespace AirTicketBooking.Repository
 
 
 
-        public string ValidateLogin(string username, string password, out string Usertype)
+        public string ValidateLogin(string username, string password, out string Usertype, out string FirstName)
         {
             Usertype = "";
+            FirstName = "";
             string connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -101,16 +102,77 @@ namespace AirTicketBooking.Repository
                     };
                     cmd.Parameters.Add(outputParamUserType);
 
+                    SqlParameter outputParamFirstName = new SqlParameter("FirstName", SqlDbType.NVarChar, 50)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    cmd.Parameters.Add(outputParamFirstName);
+
                     connection.Open();
 
                     cmd.ExecuteNonQuery();
 
                     Usertype = outputParamUserType.Value.ToString();
+                    FirstName = outputParamFirstName.Value.ToString();
                 }
                 return Usertype;
             }
         }
+
+
+        public class SearchFlightRepository
+        {
+            public List<BookingFlight> SearchFlights(SearchCriteria criteria)
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+                List<BookingFlight> matchingFlights = new List<BookingFlight>();
+
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SearchFlights", con)) // Replace with your actual stored procedure name
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@FromDestination", criteria.FromDestination);
+                        cmd.Parameters.AddWithValue("@ToDestination", criteria.ToDestination);
+
+                        if (criteria.DepartureDate.HasValue)
+                        {
+                            cmd.Parameters.AddWithValue("@DepartureDate", criteria.DepartureDate);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@DepartureDate", DBNull.Value);
+                        }
+
+                        con.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                BookingFlight flight = new BookingFlight
+                                {
+                                    FromDestination = reader["fromDestination"].ToString(),
+                                    ToDestination = reader["toDestination"].ToString(),
+                                    DepartureDate = Convert.ToDateTime(reader["departureDate"]),
+                                    DepartureTime = TimeSpan.Parse(reader["departureTime"].ToString()),
+                                    FlightId = Convert.ToInt32(reader["flightId"]),
+                                    SeatType = reader["seatType"].ToString()
+                                    // Add more properties as needed
+                                };
+
+                                matchingFlights.Add(flight);
+                            }
+                        }
+                    }
+                }
+
+                return matchingFlights;
+            }
+        }
+
     }
 
-    
+
 }

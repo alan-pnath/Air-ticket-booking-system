@@ -1,0 +1,110 @@
+﻿@model AirTicketBooking.Models.BookingFlightViewModel
+
+@{
+    ViewBag.Title = "BookFlights";
+    Layout = "~/Views/Shared/UserLoggedin.cshtml";
+}
+
+<style>
+    .form-group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    /* Style the form labels */
+    .control-label {
+        font-weight: bold;
+        flex: 1;
+        color: black;
+    }
+
+    /* Style the form controls */
+    .form-control2 {
+        width: 60%; /* Adjust the width as needed */
+
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    /* Style the submit button */
+    .btn-default {
+        background-color: #ffc107;
+        color: #333;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 10px auto; /* Center the button horizontally */
+    }
+
+        .btn-default:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+    /* Style validation error messages */
+    .text-danger {
+        color: #ff0000;
+    }
+</style>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="container">
+    <h4>Booking Flight</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookingFlight.FromDestination, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.BookingFlight.FromDestination, new { htmlAttributes = new { @class = "form-control2" } })
+        @Html.ValidationMessageFor(model => model.BookingFlight.FromDestination, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookingFlight.ToDestination, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.BookingFlight.ToDestination, new { htmlAttributes = new { @class = "form-control2" } })
+        @Html.ValidationMessageFor(model => model.BookingFlight.ToDestination, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookingFlight.FlightName, htmlAttributes: new { @class = "control-label" })
+        @Html.DropDownListFor(model => model.BookingFlight.FlightName, new SelectList(Model.FlightNames), "Select Flight", new { @class = "form-control2" })
+        @Html.ValidationMessageFor(model => model.BookingFlight.FlightName, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookingFlight.SeatType, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.BookingFlight.SeatType, new { htmlAttributes = new { @class = "form-control2" } })
+        @Html.ValidationMessageFor(model => model.BookingFlight.SeatType, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookingFlight.Date, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.BookingFlight.Date, new { htmlAttributes = new { @class = "form-control2" } })
+        @Html.ValidationMessageFor(model => model.BookingFlight.Date, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookingFlight.PassengerCount, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.BookingFlight.PassengerCount, new { htmlAttributes = new { @class = "form-control2" } })
+        @Html.ValidationMessageFor(model => model.BookingFlight.PassengerCount, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookingFlight.PaymentAmount, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.BookingFlight.PaymentAmount, new { htmlAttributes = new { @class = "form-control2" } })
+        @Html.ValidationMessageFor(model => model.BookingFlight.PaymentAmount, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-default" />
+    </div>
+</div>
+}

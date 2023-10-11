@@ -223,6 +223,7 @@
     <Content Include="Content\Home\home.css" />
     <Content Include="Content\Home\images\background-home.jpg" />
     <Content Include="Content\Home\images\home-logo.png" />
+    <Content Include="Content\Loggedin\Searchform.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -277,6 +278,9 @@
     <Content Include="Views\Shared\UserLoggedin.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Admin\AddFlightDetails.cshtml" />
+    <Content Include="Views\Admin\AddFlightJourneyData.cshtml" />
+    <Content Include="Views\User\SearchFlights.cshtml" />
+    <Content Include="Views\User\BookFlights.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

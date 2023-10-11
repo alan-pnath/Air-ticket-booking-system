@@ -9,6 +9,7 @@ using AirTicketBooking.Models;
 using System.Configuration;
 using AirTicketBooking.Repository;
 using System.Web.Security;
+using System.ComponentModel.DataAnnotations;
 
 namespace AirTicketBooking.Controllers
 {
@@ -33,7 +34,7 @@ namespace AirTicketBooking.Controllers
 
             if (ModelState.IsValid)
             {
-                string userType = dataAccess.ValidateLogin(login.Email, login.Password, out string Usertype);
+                string userType = dataAccess.ValidateLogin(login.Email, login.Password, out string Usertype, out string FirstName);
 
                 if (!string.IsNullOrEmpty(Usertype))
                 {
@@ -41,16 +42,20 @@ namespace AirTicketBooking.Controllers
 
                     if (userType.Equals("User", StringComparison.OrdinalIgnoreCase))
                     {
-                        return RedirectToAction("Index", "User"); // Redirect to User view
+                        TempData["FirstName"] = FirstName;
+                        TempData["Email"] = login.Email;
+                        return RedirectToAction("Index", "User"); 
                     }
                     else if (userType.Equals("Admin", StringComparison.OrdinalIgnoreCase))
                     {
-                        return RedirectToAction("Index", "Admin"); // Redirect to Admin view
+                        TempData["FirstName"] = "Admin";
+                        TempData["Email"] = login.Email;
+                        return RedirectToAction("Index", "Admin"); 
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", "Invalid username or password");
                 }
             }
 
@@ -111,5 +116,13 @@ namespace AirTicketBooking.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            TempData.Clear();
+            return RedirectToAction("Home", "Home");
+
+        }
     }
 }

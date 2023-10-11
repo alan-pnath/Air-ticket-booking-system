@@ -38,5 +38,31 @@ namespace AirTicketBooking.Models
         public string SeatType { get; set; }
     }
 
+    public class AddFlightJourney
+    {
+        [Key]
+        public int FlightBookingId { get; set; }
+
+        [Display(Name =" From ")]
+        public string FromDestination { get; set; }
+
+        [Display(Name = " To ")]
+        public string ToDestination { get; set; }
+
+        [Display(Name = " Departure date ")]
+        [DataType(DataType.Date)]
+        public DateTime DepartureDate { get; set; }
+
+        [Display(Name = " Time ")]
+        [DataType(DataType.Time)]
+        public TimeSpan DepartureTime { get; set; }
+
+        [Display(Name = " Flight name ")]
+        public string  FlightName { get; set; }
+
+        [Display(Name = " Seat type ")]
+        public string SeatType { get; set; }
+    }
+
 
 }

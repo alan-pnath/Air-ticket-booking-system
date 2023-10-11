@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 namespace AirTicketBooking.Models
 {
@@ -65,6 +66,70 @@ namespace AirTicketBooking.Models
 
         public string firstName { get; set; }
 
-       
+
     }
+
+    public class Search
+    {
+        [Display(Name = "From Destination")]
+        public string FromDestination { get; set; }
+
+        [Display(Name = "To Destination")]
+        public string ToDestination { get; set; }
+
+        [Display(Name = "Date")]
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
+
+
+    }
+
+    public class BookingFlight
+    {
+        [Display(Name = "From Destination")]
+        public string FromDestination { get; set; }
+
+        [Display(Name = "To Destination")]
+        public string ToDestination { get; set; }
+
+        [Display(Name = "Flight Name")]
+        public string FlightName { get; set; }
+
+        [Display(Name = "Seat type")]
+        public string SeatType { get; set; }
+
+        [Display(Name = "Departure Date")]
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
+
+        public int FlightId { get; set; }
+        public DateTime DepartureDate { get; set; }
+        public TimeSpan DepartureTime { get; set; }
+
+        [Display(Name = "Passenger count")]
+        public int PassengerCount { get; set; }
+
+        [Display(Name = "Payment amount")]
+        public decimal PaymentAmount { get; set; }
+    }
+
+    public class BookingFlightViewModel
+    {
+        public BookingFlight BookingFlight { get; set; }
+        public List<string> FlightNames { get; set; }
+    }
+
+    public class SearchCriteria
+    {
+        [Display(Name = "From Destination")]
+        public string FromDestination { get; set; }
+
+        [Display(Name = "To Destination")]
+        public string ToDestination { get; set; }
+
+        [Display(Name = "Date")]
+        [DataType(DataType.Date)]
+        public DateTime? DepartureDate { get; set; }
+    }
+
 }

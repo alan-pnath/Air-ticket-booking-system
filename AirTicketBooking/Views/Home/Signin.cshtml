@@ -7,6 +7,7 @@
 <link href="~/Content/Home/forms/signinforms.css" rel="stylesheet" />
 <div class="container-loginform">
     <div class="login-form">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         <h2 style="color:black">Signin</h2>
 
         @using (Html.BeginForm())
@@ -29,15 +30,8 @@
                 <button type="submit" class="btn btn-primary">Sign In</button>
             </div>
         }
+
     </div>
 </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-@if (ViewBag.RegistrationSuccess == true)
-{
-    <script>
-        alert("Registration Successful. You can now sign in.");
-    </script>
-}
+

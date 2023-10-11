@@ -21,18 +21,27 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.FlightName</td>
+                    <td>@item.SeatingCapacity</td>
+                    <td>@item.FlightPrice</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.FlightId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.FlightId }) |
+                        @Html.ActionLink("Delete", "DeleteFlight", new { id = item.FlightId }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                    </td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-               
-                <td>@item.FlightName</td>
-                <td>@item.SeatingCapacity</td>
-                <td>@item.FlightPrice</td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.FlightId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.FlightId }) |
-                    @Html.ActionLink("Delete", "DeleteFlight", new { id = item.FlightId }, new { onclick = "return confirm('Are sure wants to delete?');" })
-                </td>
+                <td colspan="7">No data available</td>
             </tr>
         }
     </tbody>

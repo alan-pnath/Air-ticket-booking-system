@@ -1,0 +1,61 @@
+﻿/* Container styling */
+.search-container { /* Updated class name */
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Form row styling */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Form column styling */
+.form-col { /* Updated class name */
+    flex: 0 0 calc(50% - 10px);
+    margin-bottom: 10px;
+}
+
+/* Label styling */
+.control-label {
+    font-weight: bold;
+    color: black;
+}
+
+/* Input and validation message styling */
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.text-danger {
+    color: #ff0000;
+}
+
+/* Submit button styling */
+.form-btn { /* Updated class name */
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }

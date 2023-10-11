@@ -36,6 +36,11 @@ body {
     margin: 0 auto;
     padding: 20px;
 }
+.form-group .form-control {
+    width: 150px; /* Adjust the width as needed */
+}
+
+
 
 .header {
     background-color: #333;
@@ -178,7 +183,7 @@ body {
 
 /* Add these styles for the About Us page */
 .about-us {
-    background-image: url('about-us-image.jpg'); /* Set your image path here */
+     /* Set your image path here */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

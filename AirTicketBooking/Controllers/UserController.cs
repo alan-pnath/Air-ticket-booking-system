@@ -1,8 +1,12 @@
-﻿using System;
+﻿using AirTicketBooking.Models;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static AirTicketBooking.Repository.UserDataAccess;
 
 namespace AirTicketBooking.Controllers
 {
@@ -10,6 +14,63 @@ namespace AirTicketBooking.Controllers
     {
         // GET: User
         public ActionResult Index()
+        {
+            ViewBag.FirstName = TempData["FirstName"] as string;
+            return View();
+        }
+        public ActionResult SearchFlights()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SearchFlights(SearchCriteria criteria)
+        {
+            SearchFlightRepository repository = new SearchFlightRepository();
+            List<BookingFlight> matchingFlights = repository.SearchFlights(criteria);
+
+            return View(matchingFlights);
+        }
+
+
+        public ActionResult BookFlights()
+        {
+            // Create an instance of the view model
+            var viewModel = new BookingFlightViewModel
+            {
+                BookingFlight = new BookingFlight(), // Initialize your BookingFlight model as needed
+                FlightNames = new List<string>()
+            };
+
+            // Replace with your connection string
+            string connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT [flightName] FROM [Airticket].[dbo].[TblFlight]";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string flightName = reader["flightName"].ToString();
+                            viewModel.FlightNames.Add(flightName);
+                        }
+                    }
+                }
+            }
+
+            // Pass the view model to the view
+            return View(viewModel);
+        }
+
+
+
+        public ActionResult UserBookings()
         {
             return View();
         }

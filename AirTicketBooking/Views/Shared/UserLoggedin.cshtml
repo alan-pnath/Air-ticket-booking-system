@@ -23,13 +23,13 @@
                 <ul class="navbar-nav ml-auto">
                     <!-- Use ml-auto to push text to the right -->
                     <li class="nav-item">
-                        <a>@Html.ActionLink("Home", "Home", "Home", new { @class = "nav-link" })</a>
+                        <a>@Html.ActionLink("Home", "Index", "User", new { @class = "nav-link" })</a>
                     </li>
                     <li class="nav-item">
-                        <a>@Html.ActionLink("Search flights", "", "User", new { @class = "nav-link" })</a>
+                        <a>@Html.ActionLink("Search flights", "SearchFlights", "User", new { @class = "nav-link" })</a>
                     </li>
                     <li class="nav-item">
-                        <a>@Html.ActionLink("Book Flights", "", "User", new { @class = "nav-link" })</a>
+                        <a>@Html.ActionLink("Book Flights", "BookFlights", "User", new { @class = "nav-link" })</a>
                     </li>
                     <li class="nav-item">
                         <a>@Html.ActionLink("Bookings", "", "Home", new { @class = "nav-link" })</a>
@@ -39,7 +39,7 @@
                       
                     </li>
                     <li class="nav-item">
-                        <a>@Html.ActionLink("Logout", "", "Home", new { @class = "nav-link" })</a>
+                        <a>@Html.ActionLink("Logout", "Logout", "Home", new { @class = "nav-link" })</a>
                       
                     </li>
                 </ul>
