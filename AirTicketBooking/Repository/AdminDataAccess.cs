@@ -7,57 +7,128 @@ using System.Linq;
 using System.Web;
 using AirTicketBooking.Models;
 using System.Web.UI.WebControls;
+using System.Web.Helpers;
+using System.Web.UI;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AirTicketBooking.Repository
 {
-    public class FlightRepository
+
+    using System;
+    using System.Data;
+    using System.Data.SqlClient;
+
+    public class AddAdminRepository
     {
-        public List<BookingFlight> SearchFlights(SearchCriteria criteria)
+        public string connectionString;
+
+        public string InsertAdmin(AddAdmin add)
+        {
+            SqlConnection con = null;
+            string result = "";
+
+            try
+            {
+                connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString; 
+                con = new SqlConnection(connectionString);
+                SqlCommand cmd = new SqlCommand("sp_AddAdminUser", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Name", add.Name);
+                cmd.Parameters.AddWithValue("@UserEmail", add.AdminEmail);
+                cmd.Parameters.AddWithValue("@Password", add.Password);
+
+                con.Open();
+                result = cmd.ExecuteScalar()?.ToString() ?? "";
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return result;
+            }
+            finally
+            {
+                con?.Close();
+            }
+        }
+    }
+
+
+    public class UserDataRepository
+    {
+
+        public string connectionString;
+
+        public string InsertUser(UserRegModel user)
+        {
+            SqlConnection con = null;
+            string result = "";
+
+            try
+            {
+                connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+                con = new SqlConnection(connectionString);
+                SqlCommand cmd = new SqlCommand("InsertUserDetailsAdmin", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@FirstName", user.firstName);
+                cmd.Parameters.AddWithValue("@LastName", user.lastName);
+                cmd.Parameters.AddWithValue("@DateOfBirth", user.DateofBirth);
+                cmd.Parameters.AddWithValue("@Age", user.Age);
+                cmd.Parameters.AddWithValue("@PhoneNumber", user.phoneNumber);
+                cmd.Parameters.AddWithValue("@Email", user.Email);
+
+                con.Open();
+                result = cmd.ExecuteScalar()?.ToString() ?? "";
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return result;
+            }
+            finally
+            {
+                con?.Close();
+            }
+        }
+        public List<UserReg> GetUserData()
         {
             SqlConnection con = null;
             DataSet ds = null;
-            List<BookingFlight> matchingFlights = null;
+            List<UserReg> userList = null;
 
             try
             {
                 con = new SqlConnection(ConfigurationManager.ConnectionStrings["cs"].ToString());
-                SqlCommand cmd = new SqlCommand("SearchFlights", con);
+                SqlCommand cmd = new SqlCommand("usp_ViewUserDetails", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@FromDestination", criteria.FromDestination);
-                cmd.Parameters.AddWithValue("@ToDestination", criteria.ToDestination);
-
-                if (criteria.DepartureDate.HasValue)
-                {
-                    cmd.Parameters.AddWithValue("@DepartureDate", criteria.DepartureDate);
-                }
-                else
-                {
-                    cmd.Parameters.AddWithValue("@DepartureDate", DBNull.Value);
-                }
 
                 con.Open();
                 SqlDataAdapter da = new SqlDataAdapter();
                 da.SelectCommand = cmd;
                 ds = new DataSet();
                 da.Fill(ds);
-                matchingFlights = new List<BookingFlight>();
+                userList = new List<UserReg>();
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    BookingFlight flight = new BookingFlight
+                    UserReg user = new UserReg
                     {
-                        FlightBookingId = Convert.ToInt32(ds.Tables[0].Rows[i]["flightBookingId"]),
-                        FromDestination = ds.Tables[0].Rows[i]["fromDestination"].ToString(),
-                        ToDestination = ds.Tables[0].Rows[i]["toDestination"].ToString(),
-                        DepartureDate = Convert.ToDateTime(ds.Tables[0].Rows[i]["departureDate"]),
-                        DepartureTime = ds.Tables[0].Rows[i]["departureTime"].ToString(),
-                        FlightId = Convert.ToInt32(ds.Tables[0].Rows[i]["flightId"]),
-                        SeatType = ds.Tables[0].Rows[i]["seatType"].ToString()
-                        // Add more properties as needed
+                        userId = Convert.ToInt32(ds.Tables[0].Rows[i]["userId"]),
+                        firstName = ds.Tables[0].Rows[i]["firstName"].ToString(),
+                        lastName = ds.Tables[0].Rows[i]["lastName"].ToString(),
+                        DateofBirth = Convert.ToDateTime(ds.Tables[0].Rows[i]["DateofBirth"]),
+                        Age = Convert.ToInt32(ds.Tables[0].Rows[i]["Age"]),
+                        phoneNumber = ds.Tables[0].Rows[i]["phoneNumber"].ToString(),
+                        Email = ds.Tables[0].Rows[i]["Email"].ToString(),
+
                     };
 
-                    matchingFlights.Add(flight);
+                    userList.Add(user);
                 }
             }
             catch (Exception ex)
@@ -70,10 +141,125 @@ namespace AirTicketBooking.Repository
                 con.Close();
             }
 
-            return matchingFlights;
+            return userList;
         }
-    }
 
+
+
+        public UserReg GetUserDetailsbyId(string userId)
+        {
+            SqlConnection con = null;
+            DataSet ds = null;
+            UserReg user = null;
+
+            try
+            {
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["cs"].ToString());
+                SqlCommand cmd = new SqlCommand("GetUserDetailsbyID", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                
+                cmd.Parameters.Add(new SqlParameter("@UserId", userId));
+
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    DataRow row = ds.Tables[0].Rows[i];
+                    user = new UserReg()
+                    {
+                        userId = Convert.ToInt32(row["userId"]),
+                        firstName = row["firstName"].ToString(),
+                        lastName = row["lastName"].ToString(),
+                        DateofBirth = Convert.ToDateTime(row["DateofBirth"].ToString()),
+                        Age = Convert.ToInt32(row["Age"]),
+                        phoneNumber = row["phoneNumber"].ToString(),
+                        Email = row["Email"].ToString(),
+                    };
+                }
+
+                return user;
+            }
+            catch 
+            {
+                
+                return user;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            
+        }
+
+        public string UpdateUserDataById(UserReg user)
+        {
+            SqlConnection con = null;
+            string result = "";
+            try
+            {
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["cs"].ToString());
+                SqlCommand cmd = new SqlCommand("UpdateUserDetailsById", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UserId", user.userId);
+                cmd.Parameters.AddWithValue("@FirstName", user.firstName);
+                cmd.Parameters.AddWithValue("@LastName", user.lastName);
+                cmd.Parameters.AddWithValue("@DateofBirth", user.DateofBirth);
+                cmd.Parameters.AddWithValue("@Age", user.Age);
+                cmd.Parameters.AddWithValue("@PhoneNumber", user.phoneNumber);
+                cmd.Parameters.AddWithValue("@Email", user.Email);
+                con.Open();
+                result = cmd.ExecuteScalar().ToString();
+                return result;
+            }
+            catch
+            {
+                return " ";
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public int DeleteUserById(int UserId)
+        {
+            SqlConnection con = null;
+            int result;
+
+            string connectionString;
+            try
+            {
+                connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+                con = new SqlConnection(connectionString);
+                SqlCommand cmd = new SqlCommand("DeleteUserById", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@userId", UserId);
+
+
+
+                con.Open();
+                result = cmd.ExecuteNonQuery();
+
+                return result;
+            }
+            catch
+            {
+                return result = 0;
+            }
+            finally
+            {
+                con?.Close();
+            }
+        }
+
+    }
 
 
     public class FlightBookingDataRepository
@@ -138,7 +324,7 @@ namespace AirTicketBooking.Repository
             try
             {
                 con = new SqlConnection(ConfigurationManager.ConnectionStrings["cs"].ToString());
-                SqlCommand cmd = new SqlCommand("GetAllFlightJourneyData", con); // Assuming you have a stored procedure with this name
+                SqlCommand cmd = new SqlCommand("GetAllFlightJourneyData", con); 
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 con.Open();
@@ -156,7 +342,7 @@ namespace AirTicketBooking.Repository
                         FromDestination = row["fromDestination"].ToString(),
                         ToDestination = row["toDestination"].ToString(),
                         DepartureDate = Convert.ToDateTime(row["departureDate"]),
-                        DepartureTime = TimeSpan.Parse(row["departureTime"].ToString()), // Assuming the time is stored as a string
+                        DepartureTime = TimeSpan.Parse(row["departureTime"].ToString()), 
                         FlightId = Convert.ToInt32(row["flightId"]),
                         SeatType = row["seatType"].ToString()
                     };
@@ -191,7 +377,7 @@ namespace AirTicketBooking.Repository
             {
                 connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
                 con = new SqlConnection(connectionString);
-                SqlCommand cmd = new SqlCommand("InsertFlightDetails", con); // Replace with your actual stored procedure name
+                SqlCommand cmd = new SqlCommand("InsertFlightDetails", con); 
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@FlightName", flight.FlightName);
@@ -199,7 +385,7 @@ namespace AirTicketBooking.Repository
                 cmd.Parameters.AddWithValue("@FlightPrice", flight.FlightPrice);
 
                 con.Open();
-                result = cmd.ExecuteScalar()?.ToString() ?? ""; // ExecuteScalar can return null
+                result = cmd.ExecuteScalar()?.ToString() ?? ""; 
 
                 return result;
             }
@@ -256,7 +442,7 @@ namespace AirTicketBooking.Repository
             {
                 connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
                 con = new SqlConnection(connectionString);
-                SqlCommand cmd = new SqlCommand("InsertFlightJourney", con); // Replace with your actual stored procedure name
+                SqlCommand cmd = new SqlCommand("InsertFlightJourney", con); 
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@FromDestination", flightJourney.FromDestination);
@@ -267,7 +453,7 @@ namespace AirTicketBooking.Repository
                 cmd.Parameters.AddWithValue("@SeatType", flightJourney.SeatType);
 
                 con.Open();
-                result = cmd.ExecuteScalar()?.ToString() ?? ""; // ExecuteScalar can return null
+                result = cmd.ExecuteScalar()?.ToString() ?? ""; 
 
                 return result;
             }
@@ -294,7 +480,7 @@ namespace AirTicketBooking.Repository
                 SqlCommand cmd = new SqlCommand("DeleteFlightJourneyDetails", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@flightBookingId", flightBookingId); // Use @flightBookingId
+                cmd.Parameters.AddWithValue("@flightBookingId", flightBookingId); 
 
                 con.Open();
                 result = cmd.ExecuteNonQuery();

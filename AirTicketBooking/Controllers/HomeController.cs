@@ -50,7 +50,7 @@ namespace AirTicketBooking.Controllers
                     {
                         TempData["FirstName"] = "Admin";
                         TempData["Email"] = login.Email;
-                        return RedirectToAction("Index", "Admin"); 
+                        return RedirectToAction("GetUserDetails", "Admin"); 
                     }
                 }
                 else
@@ -116,13 +116,11 @@ namespace AirTicketBooking.Controllers
             return View();
         }
 
-        [HttpPost]
         public ActionResult Logout()
         {
-            FormsAuthentication.SignOut();
             TempData.Clear();
-            return RedirectToAction("Home", "Home");
-
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Signin", "Home");
         }
     }
 }

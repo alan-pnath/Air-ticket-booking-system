@@ -222,8 +222,11 @@
     <Content Include="Content\Home\forms\signupforms.css" />
     <Content Include="Content\Home\home.css" />
     <Content Include="Content\Home\images\background-home.jpg" />
+    <Content Include="Content\Home\images\flight.jpg" />
     <Content Include="Content\Home\images\home-logo.png" />
     <Content Include="Content\Loggedin\Searchform.css" />
+    <Content Include="Content\signin\signin.js" />
+    <Content Include="Content\signup\validations.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -279,8 +282,16 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Admin\AddFlightDetails.cshtml" />
     <Content Include="Views\Admin\AddFlightJourneyData.cshtml" />
-    <Content Include="Views\User\SearchFlights.cshtml" />
     <Content Include="Views\User\BookFlights.cshtml" />
+    <Content Include="Views\Admin\GetUserDetailsById.cshtml" />
+    <Content Include="Views\Admin\EditUserDetailsById.cshtml" />
+    <Content Include="Views\Admin\GetFlightDetailsById.cshtml" />
+    <Content Include="Views\Admin\EditFlightDetailsById.cshtml" />
+    <Content Include="Views\Admin\GetFlightJourneyDataById.cshtml" />
+    <Content Include="Views\Admin\AddUserData.cshtml" />
+    <Content Include="Views\User\SearchFlights.cshtml" />
+    <Content Include="Views\User\SearchFlightResult.cshtml" />
+    <Content Include="Views\Admin\AddNewAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

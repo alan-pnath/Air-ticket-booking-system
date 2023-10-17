@@ -120,55 +120,59 @@ namespace AirTicketBooking.Repository
         }
 
 
-        public class SearchFlightRepository
+        public class FlightSearchRepository
         {
-            public List<BookingFlight> SearchFlights(SearchCriteria criteria)
+            public List<FlightJourney> GetSearchData(string fromDestination, string toDestination, DateTime? departureDate)
             {
-                string connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
-                List<BookingFlight> matchingFlights = new List<BookingFlight>();
+                SqlConnection con = null;
+                DataSet ds = null;
+                List<FlightJourney> flightJourneyList = null;
 
-                using (SqlConnection con = new SqlConnection(connectionString))
+                try
                 {
-                    using (SqlCommand cmd = new SqlCommand("SearchFlights", con)) // Replace with your actual stored procedure name
+                    con = new SqlConnection(ConfigurationManager.ConnectionStrings["cs"].ToString());
+                    SqlCommand cmd = new SqlCommand("SearchFlights", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Add parameters to the stored procedure
+                    cmd.Parameters.AddWithValue("@FromDestination", fromDestination);
+                    cmd.Parameters.AddWithValue("@ToDestination", toDestination);
+                    cmd.Parameters.AddWithValue("@DepartureDate", departureDate);
+
+                    con.Open();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    da.SelectCommand = cmd;
+                    ds = new DataSet();
+                    da.Fill(ds);
+                    flightJourneyList = new List<FlightJourney>();
+
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        cmd.Parameters.AddWithValue("@FromDestination", criteria.FromDestination);
-                        cmd.Parameters.AddWithValue("@ToDestination", criteria.ToDestination);
-
-                        if (criteria.DepartureDate.HasValue)
+                        FlightJourney flightJourney = new FlightJourney
                         {
-                            cmd.Parameters.AddWithValue("@DepartureDate", criteria.DepartureDate);
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@DepartureDate", DBNull.Value);
-                        }
+                            FlightBookingId = Convert.ToInt32(ds.Tables[0].Rows[i]["flightBookingId"]),
+                            FromDestination = ds.Tables[0].Rows[i]["fromDestination"].ToString(),
+                            ToDestination = ds.Tables[0].Rows[i]["toDestination"].ToString(),
+                            DepartureDate = Convert.ToDateTime(ds.Tables[0].Rows[i]["departureDate"]),
+                            DepartureTime = TimeSpan.Parse(ds.Tables[0].Rows[i]["departureTime"].ToString()),
+                            FlightName = ds.Tables[0].Rows[i]["flightName"].ToString(),
+                            SeatType = ds.Tables[0].Rows[i]["seatType"].ToString(),
+                        };
 
-                        con.Open();
-
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                BookingFlight flight = new BookingFlight
-                                {
-                                    FromDestination = reader["fromDestination"].ToString(),
-                                    ToDestination = reader["toDestination"].ToString(),
-                                    DepartureDate = Convert.ToDateTime(reader["departureDate"]),
-                                    DepartureTime = TimeSpan.Parse(reader["departureTime"].ToString()),
-                                    FlightId = Convert.ToInt32(reader["flightId"]),
-                                    SeatType = reader["seatType"].ToString()
-                                    // Add more properties as needed
-                                };
-
-                                matchingFlights.Add(flight);
-                            }
-                        }
+                        flightJourneyList.Add(flightJourney);
                     }
                 }
+                catch (Exception ex)
+                {
+                    // Handle exceptions here
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
 
-                return matchingFlights;
+                return flightJourneyList;
             }
         }
 

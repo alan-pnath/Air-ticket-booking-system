@@ -1,0 +1,44 @@
+﻿@model AirTicketBooking.Models.flight
+
+@{
+    ViewBag.Title = "GetFlightDetailsById";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h2>GetFlightDetailsById</h2>
+
+<div>
+    <h4>flight</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FlightName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FlightName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SeatingCapacity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeatingCapacity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FlightPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FlightPrice)
+        </dd>
+
+    </dl>
+</div>
+@*<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FlightId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+*@

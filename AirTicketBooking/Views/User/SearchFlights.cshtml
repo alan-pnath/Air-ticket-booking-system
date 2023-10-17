@@ -5,163 +5,127 @@
     Layout = "~/Views/Shared/UserLoggedin.cshtml";
 }
 @*<link href="~/Content/Site.css" rel="stylesheet" />*@
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="search-container">
-        <h4 style="color:black;">Search your flights</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-row">
-            <div class="form-col">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FromDestination, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.FromDestination, new { htmlAttributes = new { @class = "form-control2" } })
-                    @Html.ValidationMessageFor(model => model.FromDestination, "", new { @class = "text-danger" })
+    <div class="custom-container text-center">
+        <h4 class="custom-header">Search for flights</h4>
+        <hr class="custom-hr" />
+        @Html.ValidationSummary(true, "", new { @class = "custom-error-text" })
+        <div class="custom-row">
+            <div class="custom-col">
+                <div class="custom-form-group">
+                    @Html.LabelFor(model => model.FromDestination, htmlAttributes: new { @class = "custom-label text-black" })
+                    @Html.EditorFor(model => model.FromDestination, new { htmlAttributes = new { @class = "custom-input" } })
+                    @Html.ValidationMessageFor(model => model.FromDestination, "", new { @class = "custom-error-text" })
                 </div>
             </div>
-            <div class="form-col">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ToDestination, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ToDestination, new { htmlAttributes = new { @class = "form-control2" } })
-                    @Html.ValidationMessageFor(model => model.ToDestination, "", new { @class = "text-danger" })
+            <div class="custom-col">
+                <div class="custom-form-group">
+                    @Html.LabelFor(model => model.ToDestination, htmlAttributes: new { @class = "custom-label text-black" })
+                    @Html.EditorFor(model => model.ToDestination, new { htmlAttributes = new { @class = "custom-input" } })
+                    @Html.ValidationMessageFor(model => model.ToDestination, "", new { @class = "custom-error-text" })
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control2" } })
-            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+        <div class="custom-form-group">
+            @Html.LabelFor(model => model.DepartureDate, htmlAttributes: new { @class = "custom-label text-black" })
+            @Html.EditorFor(model => model.DepartureDate, new { htmlAttributes = new { @class = "custom-input" } })
+            @Html.ValidationMessageFor(model => model.DepartureDate, "", new { @class = "custom-error-text" })
         </div>
+        <br />
 
-        <div class="form-group form-btn">
-            <button type="submit" class="btn btn-primary">Search</button>
+        <div class="custom-form-group">
+            <div class="custom-button">
+                <button type="submit" class="custom-btn custom-btn-primary">Search</button>
+            </div>
         </div>
-    </div>
-
-    <div class="results-table">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>From Destination</th>
-                    <th>To Destination</th>
-                    <th>Flight Name</th>
-                    <th>Seat Type</th>
-                    <th>Departure Date</th>
-                    <th>Flight ID</th>
-                    <th>Departure Time</th>
-                    <th>Passenger Count</th>
-                    <th>Payment Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var flight in Model)
-                {
-                    <tr>
-                        <td>@flight.FromDestination</td>
-                        <td>@flight.ToDestination</td>
-                        <td>@flight.FlightName</td>
-                        <td>@flight.SeatType</td>
-                        <td>@flight.DepartureDate.ToShortDateString()</td>
-                        <td>@flight.FlightId</td>
-                        <td>@flight.DepartureTime</td>
-                        <td>@flight.PassengerCount</td>
-                        <td>@flight.PaymentAmount</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
     </div>
 }
 
+
+
+
+<br />
+<br />
+
+
+
 <style>
-    /* Container styling */
-    .search-container {
-        max-width: 800px;
+    .custom-container {
+        text-align: center;
         margin: 0 auto;
-        padding: 20px;
+        max-width: 400px; /* Adjust the max-width as needed */
+    }
+
+    .custom-header {
+        color: #000; /* Black text color for the header */
+    }
+
+    .custom-hr {
+        background-color: #000; /* Black color for the horizontal rule */
+    }
+
+    .custom-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column; /* Stack columns vertically */
+    }
+
+    .custom-col {
+        margin: 5px;
+    }
+
+    .custom-form-group {
+        text-align: center; /* Center align the form groups */
+    }
+
+    .custom-label {
+        color: #000; /* Black label text color */
+    }
+
+    .custom-input {
+        width: 100%;
+        padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
-        background-color: #f9f9f9;
     }
 
-    /* Form row styling */
-    .form-row {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+    .custom-error-text {
+        color: #ff0000; /* Red color for error messages */
     }
 
-    /* Form column styling */
-    .form-col {
-        flex: 0 0 calc(50% - 10px);
-        margin-bottom: 10px;
-    }
-
-    /* Label styling */
-    .control-label {
-        font-weight: bold;
-        color: black;
-    }
-
-    /* Input and validation message styling */
-    .form-control2 {
-        width: 300px; /* Adjust the width as needed */
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-        font-size: 16px;
-    }
-
-    .text-danger {
-        color: #ff0000;
-    }
-
-    /* Submit button styling */
-    .form-btn {
+    .custom-button {
         text-align: center;
     }
 
-    .btn-primary {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
+    .custom-btn {
         padding: 10px 20px;
-        font-size: 18px;
+        background-color: #007bff; /* Blue button background color */
+        color: #fff; /* White button text color */
+        border: none;
+        border-radius: 5px;
         cursor: pointer;
     }
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
+    .custom-btn-primary {
+        background-color: #007bff; /* Blue button background color */
+    }
 
-    /* Table styling using classes */
+    /* You can add more CSS styles or adjust existing ones to further customize the appearance of your form. */
+
+
+    /* Table styling */
     .table {
-        border-collapse: collapse;
-        width: 100%;
-        margin-top: 20px;
-        background-color: #f9f9f9;
-    }
-
-    .table-header {
-        padding: 8px;
-        text-align: left;
-        background-color: #007bff;
-        color: #fff;
-    }
-
-    .table-data {
-        padding: 8px;
-        text-align: left;
-    }
-
-    .table-row-even {
-        background-color: #f2f2f2;
+        background-color: #fff; /* Change table background color to white */
+        color: #000; /* Change table text color to black */
     }
 </style>
+
+
 
 

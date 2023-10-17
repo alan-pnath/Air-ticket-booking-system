@@ -31,8 +31,8 @@
                     <td>@item.SeatingCapacity</td>
                     <td>@item.FlightPrice</td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.FlightId }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.FlightId }) |
+                        @Html.ActionLink("Edit", "EditFlightDetailsById", new { id = item.FlightId }) |
+                        @Html.ActionLink("Details", "GetFlightDetailsById", new { id = item.FlightId }) |
                         @Html.ActionLink("Delete", "DeleteFlight", new { id = item.FlightId }, new { onclick = "return confirm('Are sure wants to delete?');" })
                     </td>
                 </tr>

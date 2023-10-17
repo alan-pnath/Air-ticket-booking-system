@@ -8,6 +8,7 @@ using AirTicketBooking.Repository;
 using static AirTicketBooking.Repository.FlightDataAccess;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Web.Security;
 
 namespace AirTicketBooking.Controllers
 {
@@ -19,17 +20,59 @@ namespace AirTicketBooking.Controllers
             return View();
         }
 
-        // GET: Admin/Details/5
-        public ActionResult Details(int id)
+        public ActionResult AddNewAdmin()
         {
             return View();
         }
 
-        // GET: Admin/Create
-        public ActionResult Create()
+        [HttpPost]
+        public ActionResult AddNewAdmin(AddAdmin add)
+        {
+            if (ModelState.IsValid)
+            {
+                    AddAdminRepository admin = new AddAdminRepository();
+                    string result = admin.InsertAdmin(add);
+                    TempData["result1"] = result;
+                    ModelState.Clear();
+                    return RedirectToAction("AddNewAdmin");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error ");
+                return View();
+            }
+           
+        }
+
+        [HttpGet]
+        public ActionResult AddUserData()
         {
             return View();
         }
+
+        //Add user data by admin
+        [HttpPost]
+        public ActionResult AddUserData(UserRegModel User)
+        {
+            if (ModelState.IsValid)
+            {
+                UserDataRepository user = new UserDataRepository();
+
+                string result = user.InsertUser(User);
+
+                TempData["result1"] = result;
+                ModelState.Clear();
+                return RedirectToAction("GetFlightDetails");
+
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error ");
+                return View();
+            }
+        }
+
+        //get user data to view deatails
         public ActionResult GetUserDetails()
         {
             UserDataRepository dataRepository = new UserDataRepository();
@@ -37,13 +80,102 @@ namespace AirTicketBooking.Controllers
 
             return View(userList);
         }
+        public ActionResult GetUserDetailsById(string userId)
+        {
+            UserDataRepository dataRepository = new UserDataRepository();
+            UserReg user = dataRepository.GetUserDetailsbyId(userId);
 
+            return View(user);
+           
+        }
+        [HttpGet]
+        public ActionResult EditUserDetailsById(string ID)
+        {
+            UserDataRepository dataRepository = new UserDataRepository();
+            UserReg user = dataRepository.GetUserDetailsbyId(ID);
+
+            return View(user);
+
+        }
+
+        [HttpPost]
+        public ActionResult EditUserDetailsById(UserReg user)
+        {
+            user.DateofBirth = Convert.ToDateTime(user.DateofBirth);
+            if (ModelState.IsValid)
+            {
+                UserDataRepository dataRepository = new UserDataRepository();
+                string result = dataRepository.UpdateUserDataById(user);
+                TempData["result2"] = result;
+                ModelState.Clear();
+                return RedirectToAction("GetUserDetails");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error in saving data");
+                return View();
+            }
+
+        }
+        [HttpGet]
+        public ActionResult DeleteUserDetailById(int id)
+        {
+            UserDataRepository UserDelete = new UserDataRepository();
+
+            
+            int result = UserDelete.DeleteUserById(id);
+
+            TempData["result3"] = result;
+            ModelState.Clear();
+
+
+            return RedirectToAction("GetUserDetails");
+        }
+
+
+        //get flight details
         public ActionResult GetFlightDetails()
         {
             FlightDataRepository dataRepository = new FlightDataRepository();
             List<flight> flightList = dataRepository.GetAllFlightDetails();
 
             return View(flightList);
+        }
+
+        public ActionResult GetFlightDetailsById(string flightId)
+        {
+            FlightDataAccess flightDataAccess = new FlightDataAccess();
+            flight Flight = flightDataAccess.GetFlightDetailsById(flightId);
+            return View(Flight);
+        }
+
+        [HttpGet]
+        public ActionResult EditFlightDetailsById(string flightId)
+        {
+            FlightDataAccess flightDataAccess = new FlightDataAccess();
+            flight Flight = flightDataAccess.GetFlightDetailsById(flightId);
+            return View(Flight);
+        }
+
+
+        [HttpPost]
+        public ActionResult EditFlightDetailsById(flight Flight)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                FlightDataAccess dataRepository = new FlightDataAccess();
+                string result = dataRepository.UpdateFlightDetailsById(Flight);
+                TempData["result2"] = result;
+                ModelState.Clear();
+                return RedirectToAction("GetFlightDetails");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error in saving data");
+                return View();
+            }
+
         }
         [HttpGet]
         public ActionResult AddFlightDetails()
@@ -55,9 +187,8 @@ namespace AirTicketBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                FlightRepository flightRepository = new FlightRepository(); // Assuming you have a FlightRepository class
-
-                // Insert the flight data into the database
+                FlightRepository flightRepository = new FlightRepository(); 
+                
                 string result = flightRepository.InsertFlight(flight);
 
                 TempData["result1"] = result;
@@ -78,7 +209,7 @@ namespace AirTicketBooking.Controllers
         {
             FlightRepository flightRepository = new FlightRepository();
 
-            // Call the method to delete the flight record by flightId
+           
             int result = flightRepository.DeleteFlightById(id);
 
             TempData["result3"] = result;
@@ -88,6 +219,8 @@ namespace AirTicketBooking.Controllers
             return RedirectToAction("GetFlightDetails");
         }
 
+
+        //get flight booking details
 
         public ActionResult GetFlightBookings()
         {
@@ -109,7 +242,7 @@ namespace AirTicketBooking.Controllers
         {
             List<string> flightNames = new List<string>();
 
-            // Replace with your connection string
+            
             string connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -132,7 +265,7 @@ namespace AirTicketBooking.Controllers
                 }
             }
 
-            // Pass the list of flight names to the view
+            
             ViewBag.FlightNames = flightNames;
 
             return View();
@@ -143,9 +276,9 @@ namespace AirTicketBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                FlightRepository flightRepository = new FlightRepository(); // Assuming you have a FlightRepository class
+                FlightRepository flightRepository = new FlightRepository(); 
 
-                // Insert the flight journey data into the database
+                
                 string result = flightRepository.InsertFlightJourney(flightJourney);
 
                 TempData["result2"] = result;
@@ -156,20 +289,26 @@ namespace AirTicketBooking.Controllers
             }
             else
             {
-                // Handle the case where model validation failed
+                
                 ModelState.AddModelError("", "Validation failed.");
                 return View();
             }
         }
 
-        
+        public ActionResult GetFlightJourneyDataById(string FlightId)
+        {
+            FlightDataAccess flightDataAccess = new FlightDataAccess();
+            string flightDetails = flightDataAccess.GetFlightJourneyDetailsById(FlightId);
+            return View(flightDetails);
+        }
+
 
 
         public ActionResult DeleteFlightJourney(int id)
         {
             FlightRepository flightRepository = new FlightRepository();
 
-            // Call the method to delete the flight record by flightId
+            
             int result = flightRepository.DeleteFlightJourneyById(id);
 
             TempData["result3"] = result;
@@ -179,6 +318,13 @@ namespace AirTicketBooking.Controllers
             return RedirectToAction("GetFlightJourneydata");
         }
 
+
+        public ActionResult Logout()
+        {
+            TempData.Clear();
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Signin","Home");
+        }
 
     }
 }

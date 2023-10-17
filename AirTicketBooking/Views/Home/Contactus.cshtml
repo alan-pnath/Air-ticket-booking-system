@@ -10,7 +10,6 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        flex:auto;
     }
 
     /* Apply styles to the container */
@@ -23,7 +22,8 @@
         height: auto;
     }
 
-    .content-container {
+    . /* Add a class to the content container for better targeting */
+    .contact .content-container {
         background-color: #ffffff;
         padding: 20px;
         position: absolute;
@@ -33,7 +33,10 @@
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
         text-align: center;
+        max-width: 400px; /* Set your desired maximum width */
     }
+
+
 
         .content-container h1 {
             font-size: 36px;
@@ -95,14 +98,15 @@
         }
 </style>
 
-<div class="contact">
-    
-    <div class="content-container">
+
+<div class="custom-contact">
+
+    <div class="custom-content-container">
         <h1>Contact Us</h1>
         <p>Have questions or feedback?</p>
         <p>Feel free to reach out to us:</p>
 
-        <div class="contact-info">
+        <div class="custom-contact-info">
             <p>123 Main Street</p>
             <p>City, Country</p>
             <p>Email: contact@yourwebsite.com</p>
@@ -111,18 +115,19 @@
 
         <h2>Contact Form</h2>
         <form action="submit_form.php" method="post">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <label for="custom-name">Name:</label>
+            <input type="text" id="custom-name" name="name" required>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="custom-email">Email:</label>
+            <input type="email" id="custom-email" name="email" required>
 
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" rows="4" required></textarea>
+            <label for="custom-message">Message:</label>
+            <textarea id="custom-message" name="message" rows="4" required></textarea>
 
             <button type="submit">Submit</button>
         </form>
     </div>
 </div>
+
 
 

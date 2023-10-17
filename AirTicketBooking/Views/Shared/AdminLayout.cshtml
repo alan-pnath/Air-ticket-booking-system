@@ -61,7 +61,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 </a>
                                 <ul class="treeview-menu">
                                     <li>@Html.ActionLink("View User", "GetUserDetails", "Admin", new { @class = "nav-link" })</li>
-                                    <li>@Html.ActionLink("Add User", "AddUserDetails", "Admin", new { @class = "nav-link" })</li>
+                                    <li>@Html.ActionLink("Add User", "AddUserData", "Admin", new { @class = "nav-link" })</li>
 
                                     
                                 </ul>
@@ -153,6 +153,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </a>
                             <ul class="dropdown-menu drp-mnu">
                                 <li> @Html.ActionLink("Profile", "", "Admin", new { @class = "nav-link" }) </li>
+                                <li> @Html.ActionLink("Add admin", "AddNewAdmin", "Admin", new { @class = "nav-link" }) </li>
                                 <li> @Html.ActionLink("Logout", "Logout", "Home", new { @class = "nav-link" }) </li>
                             </ul>
                         </li>

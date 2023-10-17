@@ -34,7 +34,7 @@
                     <td>@item.SeatType</td>
                     <td>
                         @Html.ActionLink("Edit", "EditFlightJourney", new { id = item.FlightBookingId }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.FlightBookingId }) |
+                        @Html.ActionLink("Details", "GetFlightJourneyDataById", new { id = item.FlightBookingId }) |
                         @Html.ActionLink("Delete", "DeleteFlightJourney", new { id = item.FlightBookingId }, new { @onclick = "return confirm('Are you sure you want to delete?');" })
                     </td>
                 </tr>

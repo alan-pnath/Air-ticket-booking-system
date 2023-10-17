@@ -16,8 +16,9 @@
             <!-- Add table headers for user properties here -->
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Email</th>
+            <th>Date of Birth</th>
             <th>Age</th>
+            <th>Email</th>
             <th>Phone Number</th>
             <th>Action</th>
         </tr>
@@ -29,15 +30,37 @@
                 <!-- Add table cells to display user properties here -->
                 <td>@user.firstName</td>
                 <td>@user.lastName</td>
-                <td>@user.Email</td>
+                <td>@user.DateofBirth.ToShortDateString()</td>
                 <td>@user.Age</td>
+                <td>@user.Email</td>
                 <td>@user.phoneNumber</td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = user.userId }) |
-                    @Html.ActionLink("Details", "Details", new { id = user.userId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = user.userId })
+                    @Html.ActionLink("Edit", "EditUserDetailsById", new { id = user.userId }) |
+                    @Html.ActionLink("Details", "GetUserDetailsById", new { id = user.userId }) |
+                    @Html.ActionLink("Delete", "DeleteUserDetailById", new { id = user.userId })
                 </td>
             </tr>
         }
     </tbody>
 </table>
+@if (TempData["result1"] != null)
+{
+    <script type="text/javascript">
+        alert("Record Is Inserted Successfully");
+    </script>
+
+}
+@if (TempData["result2"] != null)
+{
+    <script type="text/javascript">
+        alert("Record Is Updated Successfully");
+    </script>
+
+}
+@if (TempData["result3"] != null)
+{
+    <script type="text/javascript">
+        alert("Record Is Deleted Successfully");
+    </script>
+
+}   

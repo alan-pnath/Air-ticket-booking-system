@@ -1,0 +1,75 @@
+﻿@model AirTicketBooking.Models.FlightJourney
+
+@{
+    ViewBag.Title = "GetFlightJourneyDataById";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h2>GetFlightJourneyDataById</h2>
+
+<div>
+    <h4>FlightJourney</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FlightBookingId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FlightBookingId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FromDestination)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FromDestination)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ToDestination)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ToDestination)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartureDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartureDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartureTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FlightId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FlightId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SeatType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeatType)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

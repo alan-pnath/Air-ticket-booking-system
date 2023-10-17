@@ -38,4 +38,21 @@ namespace AirTicketBooking.Models
         public decimal FlightPrice { get; set; }
     }
 
+    public class AddAdmin
+    {
+        [Display(Name="Name")]
+        public string Name {  get; set; }
+
+        [Display(Name="Email")]
+        [DataType(DataType.EmailAddress)]
+        public string AdminEmail { get; set; }
+
+        [Display(Name ="password")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Display(Name ="Confirm Password")]
+        [DataType(DataType.Password)]
+        public string ConfirmPassword { get; set; }
+    }
 }

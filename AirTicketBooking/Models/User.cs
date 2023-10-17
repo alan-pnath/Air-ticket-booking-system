@@ -69,20 +69,7 @@ namespace AirTicketBooking.Models
 
     }
 
-    public class Search
-    {
-        [Display(Name = "From Destination")]
-        public string FromDestination { get; set; }
-
-        [Display(Name = "To Destination")]
-        public string ToDestination { get; set; }
-
-        [Display(Name = "Date")]
-        [DataType(DataType.Date)]
-        public DateTime Date { get; set; }
-
-
-    }
+   
 
     public class BookingFlight
     {
@@ -119,7 +106,7 @@ namespace AirTicketBooking.Models
         public List<string> FlightNames { get; set; }
     }
 
-    public class SearchCriteria
+    public class Search
     {
         [Display(Name = "From Destination")]
         public string FromDestination { get; set; }
@@ -129,7 +116,55 @@ namespace AirTicketBooking.Models
 
         [Display(Name = "Date")]
         [DataType(DataType.Date)]
-        public DateTime? DepartureDate { get; set; }
+        public DateTime DepartureDate { get; set; }
+
+
+    }
+
+    public class SearcResult
+    {
+        public string FromDestination { get; set; }
+        public string ToDestination { get; set; }
+        public DateTime DepartureDate { get; set; }
+        public TimeSpan DepartureTime { get; set; }
+        public int FlightId { get; set; }
+
+        public string FlightName { get; set; }
+        public string SeatType { get; set; }
+    }
+    
+
+    public class UserRegModel
+    {
+        [Key]
+        public int userId { get; set; }
+
+        [Required]
+        [Display(Name = "First name")]
+        public string firstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last name")]
+        public string lastName { get; set; }
+
+        [Required]
+        [Display(Name = "Date of birth")]
+        [DataType(DataType.Date)]
+        public DateTime DateofBirth { get; set; }
+
+        [Required]
+        [Display(Name = "Age ")]
+        public int Age { get; set; }
+
+        [Required]
+        [Display(Name = "Phone Number")]
+        [DataType(DataType.PhoneNumber)]
+        public string phoneNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
     }
 
 }

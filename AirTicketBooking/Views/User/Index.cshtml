@@ -4,6 +4,49 @@
     Layout = "~/Views/Shared/UserLoggedin.cshtml";
 }
 
-<div>
-    <h1>Hi, @ViewBag.FirstName</h1>
-</div>
+@*<div>
+        <h1>Hi, @ViewBag.FirstName</h1>
+    </div>*@
+
+
+    <!-- Add any additional styles specific to this view -->
+<style>
+    /* Example custom styles */
+    .content-container {
+        text-align: left;
+    }
+
+    .image-container {
+        max-width: 100%;
+        margin: 0 auto;
+
+    }
+
+    .content-text {
+        font-size: 24px;
+        margin-top: 20px;
+    }
+
+    .flight-info {
+        font-size: 18px;
+        margin-top: 20px;
+    }
+</style>
+
+    <div class="content-container">
+        <div class="image-container">
+            
+            <img src="~/Content/Home/images/flight.jpg" alt="Sample Image" />
+        </div>
+        <p class="content-text">Welcome to Sky Route! Enjoy your experience.</p>
+
+        <div class="flight-info">
+            <h2>Book Your Flights with Ease</h2>
+            <p>With Sky Route, you can easily book your flights to destinations around the world. Our user-friendly interface and extensive flight options make the booking process a breeze. Whether you're planning a business trip or a leisurely vacation, we've got you covered.</p>
+        </div>
+
+        <div class="flight-info">
+            <h2>Exceptional User Experience</h2>
+            <p>At Sky Route, we prioritize your satisfaction. Our website is designed to provide you with a seamless and enjoyable user experience. From searching for flights to managing your bookings, we're here to make your travel experience stress-free and enjoyable.</p>
+        </div>
+    </div>

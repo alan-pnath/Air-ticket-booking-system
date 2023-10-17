@@ -1,0 +1,68 @@
+﻿@model List<AirTicketBooking.Models.FlightJourney>
+
+@{
+    ViewBag.Title = "SearchFlightResult";
+    Layout = "~/Views/Shared/UserLoggedin.cshtml";
+}
+
+<h2>SearchFlightResult</h2>
+
+@foreach (var flightJourney in Model)
+{
+    <div>
+        <h4>FlightJourney</h4>
+        <hr />
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => flightJourney.FromDestination)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => flightJourney.FromDestination)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => flightJourney.ToDestination)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => flightJourney.ToDestination)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => flightJourney.DepartureDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => flightJourney.DepartureDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => flightJourney.DepartureTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => flightJourney.DepartureTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => flightJourney.FlightName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => flightJourney.FlightName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => flightJourney.SeatType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => flightJourney.SeatType)
+            </dd>
+
+        </dl>
+    </div>
+  
+}
