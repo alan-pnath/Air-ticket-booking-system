@@ -20,6 +20,7 @@ namespace AirTicketBooking.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult AddNewAdmin()
         {
             return View();
@@ -28,20 +29,29 @@ namespace AirTicketBooking.Controllers
         [HttpPost]
         public ActionResult AddNewAdmin(AddAdmin add)
         {
+            AddAdminRepository addAdminRepository = new AddAdminRepository();
+
             if (ModelState.IsValid)
             {
-                    AddAdminRepository admin = new AddAdminRepository();
-                    string result = admin.InsertAdmin(add);
-                    TempData["result1"] = result;
+                bool adminInserted = addAdminRepository.InsertAdmin(add);
+
+                if (adminInserted)
+                {
+                    TempData["RegistrationSuccess"] = true;
                     ModelState.Clear();
                     return RedirectToAction("AddNewAdmin");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "User with the same email already exists.");
+                    return View();
+                }
             }
             else
             {
-                ModelState.AddModelError("", "Error ");
+                ModelState.AddModelError("", "Error");
                 return View();
             }
-           
         }
 
         [HttpGet]

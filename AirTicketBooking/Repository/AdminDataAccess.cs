@@ -20,40 +20,72 @@ namespace AirTicketBooking.Repository
 
     public class AddAdminRepository
     {
+        public bool UserExists(string email)
+        {
+            // Your connection string
+            string connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // Create a SqlCommand to check if the user exists based on the email
+                using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM TblUserLogin WHERE [Email] = @Email", connection))
+                {
+                    cmd.Parameters.AddWithValue("@Email", email);
+
+                    // Execute the query
+                    int count = (int)cmd.ExecuteScalar();
+
+                    // If count > 0, a user with the same email exists
+                    return count > 0;
+                }
+            }
+        }
+
         public string connectionString;
 
-        public string InsertAdmin(AddAdmin add)
+        public bool InsertAdmin(AddAdmin add)
         {
             SqlConnection con = null;
             string result = "";
 
-            try
+            if (UserExists(add.AdminEmail))
             {
-                connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString; 
-                con = new SqlConnection(connectionString);
-                SqlCommand cmd = new SqlCommand("sp_AddAdminUser", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@Name", add.Name);
-                cmd.Parameters.AddWithValue("@UserEmail", add.AdminEmail);
-                cmd.Parameters.AddWithValue("@Password", add.Password);
-
-                con.Open();
-                result = cmd.ExecuteScalar()?.ToString() ?? "";
-
-                return result;
+                Console.WriteLine("User with the same email already exists.");
+                return false; // Return false to indicate that the user was not inserted
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.Message);
-                return result;
-            }
-            finally
-            {
-                con?.Close();
+                try
+                {
+                    connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+                    con = new SqlConnection(connectionString);
+                    SqlCommand cmd = new SqlCommand("sp_AddAdminUser", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@Name", add.Name);
+                    cmd.Parameters.AddWithValue("@UserEmail", add.AdminEmail);
+                    cmd.Parameters.AddWithValue("@Password", add.Password);
+
+                    con.Open();
+                    result = cmd.ExecuteScalar()?.ToString() ?? "";
+
+                    return result != "-1"; // Assuming the stored procedure returns -1 on failure
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return false;
+                }
+                finally
+                {
+                    con?.Close();
+                }
             }
         }
     }
+
 
 
     public class UserDataRepository

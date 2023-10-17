@@ -49,7 +49,7 @@ namespace AirTicketBooking.Repository
                 else 
                 { 
 
-                // Continue with user insertion if the user does not exist
+               
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
