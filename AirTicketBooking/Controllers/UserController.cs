@@ -99,6 +99,7 @@ namespace AirTicketBooking.Controllers
         public ActionResult Logout()
         {
             TempData.Clear();
+            Session.Clear();
             FormsAuthentication.SignOut();
             return RedirectToAction("Signin", "Home");
         }

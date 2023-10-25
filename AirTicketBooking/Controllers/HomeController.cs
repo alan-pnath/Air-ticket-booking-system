@@ -42,14 +42,16 @@ namespace AirTicketBooking.Controllers
 
                     if (userType.Equals("User", StringComparison.OrdinalIgnoreCase))
                     {
-                        TempData["FirstName"] = FirstName;
-                        TempData["Email"] = login.Email;
+                        Session["FirstName"] = FirstName;
+                        
+                        Session["Email"] = login.Email;
                         return RedirectToAction("Index", "User"); 
                     }
                     else if (userType.Equals("Admin", StringComparison.OrdinalIgnoreCase))
                     {
-                        TempData["FirstName"] = "Admin";
-                        TempData["Email"] = login.Email;
+                        Session["FirstName"] = "Admin";
+                        
+                        Session["Email"] = login.Email;
                         return RedirectToAction("GetUserDetails", "Admin"); 
                     }
                 }
@@ -118,7 +120,8 @@ namespace AirTicketBooking.Controllers
 
         public ActionResult Logout()
         {
-            TempData.Clear();
+           
+            Session.Clear();
             FormsAuthentication.SignOut();
             return RedirectToAction("Signin", "Home");
         }

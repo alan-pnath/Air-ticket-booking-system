@@ -55,4 +55,20 @@ namespace AirTicketBooking.Models
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
     }
+
+    public class ChangePassword
+    {
+        [DataType(DataType.Password)]
+        [Display(Name ="Enter old password")]
+        public string OldPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Enter new password")]
+        public string NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm new password")]
+        public string ConfirmPassword { get; set; }
+
+    }
 }

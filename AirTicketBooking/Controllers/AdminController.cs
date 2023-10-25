@@ -327,11 +327,22 @@ namespace AirTicketBooking.Controllers
 
             return RedirectToAction("GetFlightJourneydata");
         }
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
 
-
+       /* [HttpPost]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+*/
         public ActionResult Logout()
         {
             TempData.Clear();
+            Session.Clear();
             FormsAuthentication.SignOut();
             return RedirectToAction("Signin","Home");
         }
